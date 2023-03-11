@@ -86,40 +86,6 @@ const canvas = document.getElementById("canvas");
 
 
 
-// const blocker = () => {
-//     let optionsButtons = document.querySelectorAll(".options");
-//     letterButtons = document.querySelectorAll(".letters");
-
-//     optionsButtons.forEach((button) => {
-//         button.disabled = true;
-//     });
-//     letterButtons.forEach((button) => {
-//         button.disabled.true;
-//     });
-//     newGameDiv.classList.remove("hide");
-
-// };
-// const generateWord = (optionValue) => {
-//     let optionsButtons = document.querySelectorAll(".options");
-   
-//     optionsButtons.forEach((button) => {
-//         if (button.innerText.toLowerCase() === optionValue) {
-//             button.classList.add("active");
-//         }
-//         button.disabled = true;
-//     });
-//     letterDiv.classList.remove("hide");
-//     userInputSection.innerText = "";
-
-//     let optionArray = options[optionValue];
-
-//     chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
-//     chosenWord = chosenWord.toUpperCase();
-
-//     let displayItem = chosenWord.replace(/./g, '<span class="dashes"></span>');
-
-//     userInputSection.innerHTML = displayItem;
-// };
 
 //couldn't figure out how to draw the original hangman stick figure and got this explanation online.
 // I couldn't get it to work in my code though.
