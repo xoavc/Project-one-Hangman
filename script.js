@@ -121,7 +121,8 @@ const canvas = document.getElementById("canvas");
 //     userInputSection.innerHTML = displayItem;
 // };
 
-
+//couldn't figure out how to draw the original hangman stick figure and got this explanation online.
+// I couldn't get it to work in my code though.
 
     let { initialDrawing } = canvasCreator();
 
