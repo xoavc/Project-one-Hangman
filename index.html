@@ -8,24 +8,27 @@
     <script defer src="script.js"></script>
     <title></title>
 </head>
-<body>
+
 
 <img src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/nintendo_dsiware_8/H2x1_DSiWare_ExtremeHangman_image1600w.jpg"
 width="1500" height="300">
-    <div class="div">
-        <div id="options-div"></div>
-        <div id="letter-div" class="letter-div hide"></div>
-        <div id="user-input-section"></div>
-        <canvas id="canvas"></canvas>
-        <div id="new-game-div" class="new-game-popup hide">
-            <div id="result text"></div>
+
+<body>
+    <div class="container">
+        
+        <div class="Wrong-Guesses"><span id="mistakes"></span> <span id="maxTry"></span></div>
+        <div class="div">
+
+            <canvas id="canvas"></canvas>
+            
+            <p>Guess the word below</p>
+            <p id="wordSpotlight"> The word to be guessed goes here</p>
+            <div id="keyboard"></div>
+            <button class="btn btn-info" onClick="reset()"></button>
             <button id="new-game-button">Start Game</button>
         </div>
+        
     </div>
-    
-    <h1></h1>
-    
-    <h3></h3>
-    
-</body>
+   
+     </body>
 </html>

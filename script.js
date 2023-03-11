@@ -1,127 +1,132 @@
-const letterDiv = document.getElementById("letter-div");
-const optionsDiv = document.getElementById("options-div");
-const userInputSection = document.getElementById("user-input-section");
-const newGameDiv = document.getElementById("new-game-div");
-const newGameButton = document.getElementById("new-game-button");
-const canvas = document.getElementById("canvas");
-const resultText = document.getElementById("result-text");
+const words = [
+        "Antelope",
+        "Camel",
+        "Dolphin",
+        "Flamingo",
+        "Spagetti", 
+        "Dumplings", 
+        "Meatballs", 
+        "Quesadilla",
+        "Bahamas", 
+        "Australia", 
+        "Indonesia", 
+        "Seychelles",
+]   
 
+let answer = " ";
+let mistakes = 0;
+let guessed = [];
+let wordStatus = null;
 
-//let letters =  
-
-let options = {
-    animals: ["Antelope", "Camel", "Dolphin", "Flamingo"],
-    foods: ["Spagetti", "Dumplings", "Meatballs", "Quesadilla"],
-    places: ["Bahamas", "Australia", "Indonesia", "Seychelles"],
-    
+function randomWord() {
+    answer = words[Math.floor(Math.random() * words.length)]
 }
-//let winCount = 0;
-//let count = 0;
 
-let chosenWord = "";
-const displayOption = () => {
-    optionsDiv.innerHTML += "<h3>Select a Category</h3>"  
-    let buttonCon = document.createElement("div");
-    for (let value in options) {
-        buttonCon.innerHTML += `<button class="options" onclick="generateWord(${value})">${value}</button>`;
+//found this code "shortcut" so i didn't have to repeat a long code for a keyboard
 
-    }
-    optionsDiv.appendChild(buttonCon);
-};
-const blocker = () => {
-    let optionsButtons = document.querySelectorAll(".options");
-    letterButtons = document.querySelectorAll(".letters");
+function generateButtons() {
+    let buttonsHTML = "abcdefghijklmnopqrstuvwxyz" .split("").map(letter =>
+        `
+        <button
+        class="btn btn-lg btn-primary m-2"
+        id='` + letter + `'
+        onClick="handleGuess('` + letter +`')"
+        >
+         ` + letter + `
+        </button>
+        `).join('');
 
-    optionsButtons.forEach((button) => {
-        button.disabled = true;
-    });
-    letterButtons.forEach((button) => {
-        button.disabled.true;
-    });
-    newGameContainer.classList.remove("hide");
+        document.getElementById("keyboard").innerHTML = buttonsHTML
+}
 
-};
-const generateWord = (optionValue) => {
-    let optionsButtons = document.querySelectorAll(".options");
+ function handleGuess(chosenLetter) {
+    guessed.indexOf(chosenLetter) === -1 ? guessed.push(chosenLetter) : null;
+    document.getElementById(chosenLetter).setAttribute('disabled', true);
+
+ 
+
+  if (answer.indexOf(chosenLetter) >= 0) {
+    guessedWord();
+    seeIfPlayerWon();
+  } else if (answer.indexOf(chosenLetter) === -1) {
+    updateMistakes();
+    seeIfPlayerWon();
+
+  }
+ }
+
+ 
+ 
+ function guessedWord() {
+    wordStatus = answer.split("").map(letter => (guessed.indexOf(letter) >= 0 ? letter : " _ ")).join("");
    
-    optionsButtons.forEach((button) => {
-        if (button.innerText.toLowerCase() === optionValue) {
-            button.classList.add("active");
-        }
-        button.disabled = true;
-    });
-    letterDiv.classList.remove("hide");
-    userInputSection.innerText = "";
+    document.getElementById('wordSpotlight').innerHTML = wordStatus;
+ }
 
-    let optionArray = options[optionValue];
-
-    chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
-    chosenWord = chosenWord.toUpperCase();
-
-    let displayItem = chosenWord.replace(/./g, '<span class="dashes"></span>');
-
-    userInputSection.innerHTML = displayItem;
-};
-
-const initializer = () => {
-    winCount = 0;
-    count = 0;
-
-    userInputSection.innerHTML = "";
-    optionsDiv.innerHTML = "";
-    letterDiv.classList.add("hide");
-    newGameDiv.classList.add("hide");
-    letterDiv.innerHTML = "";
-
-    for (let i = 65; i < 91; i++) {
-        let button = document.createElement("button");
-        button.classList.add("letters");
-
-
-        button.innerText = String.fromCharCode(i);
-
-        button.addEventListener("click", () => {
-            let charArray = chosenWord.split("");
-            let dashes = document.getElementsByClassName("dashes");
-
-            if (charArray.includes(button.innerText)) {
-                charArray.forEach((char, index) => {
-
-            if (char === button.innerText) {
-                 
-                dashes[index].innerText = char;
-
-                winCount += 1; 
-
-                if(winCount == charArray.length) {
-                    resultText.innerHTML = `<h2 class='win-msg'>You Win!!</h2><p>The word was <span>${chosenWord}</span></p>`;
-
-                    blocker();
-                }
-
-             }
-            });
-            }else {
-                count += 1;
-
-                drawMan(count);
-
-                if (count == 6) {
-                    resultText.innerHTML = `<h2 class='lose-msg'>Game Over!</h2><p>The word was <span>${chosenWord}</span></p>`;
-                    blocker();
-                }
-            }
-            button.disabled = true;
-        }
-        );
-        letterContainer.append(button);
+ function  seeIfPlayerWon() {
+    if (wordStatus === answer) {
+        document.getElementById("keyboard").innerHTML = "You Won! :)";
+    }else if (wordStatus === maxTry) {
+        document.getElementById("keybord").innerHTML = "You Lost! :(";
+        document.getElementById("keyboard").innerHTML = "The word was: " + answer;
     }
-    displayOption();
+    
+ }
+
+ function updateMistakes() {
+    document.getElementById("mistakes").innerHTML = mistakes;
+ }
+
+ randomWord();
+generateButtons();
+guessedWord();
+
+
+const canvas = document.getElementById("canvas");
+
+
+
+// const blocker = () => {
+//     let optionsButtons = document.querySelectorAll(".options");
+//     letterButtons = document.querySelectorAll(".letters");
+
+//     optionsButtons.forEach((button) => {
+//         button.disabled = true;
+//     });
+//     letterButtons.forEach((button) => {
+//         button.disabled.true;
+//     });
+//     newGameDiv.classList.remove("hide");
+
+// };
+// const generateWord = (optionValue) => {
+//     let optionsButtons = document.querySelectorAll(".options");
+   
+//     optionsButtons.forEach((button) => {
+//         if (button.innerText.toLowerCase() === optionValue) {
+//             button.classList.add("active");
+//         }
+//         button.disabled = true;
+//     });
+//     letterDiv.classList.remove("hide");
+//     userInputSection.innerText = "";
+
+//     let optionArray = options[optionValue];
+
+//     chosenWord = optionArray[Math.floor(Math.random() * optionArray.length)];
+//     chosenWord = chosenWord.toUpperCase();
+
+//     let displayItem = chosenWord.replace(/./g, '<span class="dashes"></span>');
+
+//     userInputSection.innerHTML = displayItem;
+// };
+
+
 
     let { initialDrawing } = canvasCreator();
 
-    initialDrawing();
-};
+     initialDrawing();
+ 
 
 const canvasCreator = () => {
     let context = canvas.getContext("2d");
@@ -159,13 +164,13 @@ const canvasCreator = () => {
     const initialDrawing = () => {
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-        drawLine(10, 130, 130, 130);
+        drawLine(15, 120, 120, 120);
 
-        drawLine(10, 10, 10, 131);
+        drawLine(12, 12, 12, 130);
 
-        drawLine(10, 10, 70, 10);
+        drawLine(12, 12, 70, 10);
 
-        drawLine(70, 10, 70, 20);
+        drawLine(70, 12, 70, 25);
     };
 
     return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
